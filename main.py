@@ -56,17 +56,3 @@ def create_video( req: VideoReq):
         print(e)
         raise
     return {"task_id": task_id}
-
-@app.post("/test")
-def test(background_task: BackgroundTasks):
-    try:
-     background_task.add_task(async_test)
-    except Exception as e:
-        print(e)
-        raise
-    return {"Hello": "World"}
-
-def async_test():
-    time.sleep(5)
-    print(1111)
-    return

@@ -57,17 +57,18 @@ class VideoApi(BaseGen):
                     return "", TaskStatus.FAILED
                 
                 link = result[0]
-                if not os.path.exists(os.path.join(output_dir, f"{task_id}.mp4")):
+                filepath = os.path.join(output_dir, f"{task_id}.mp4")
+                if not os.path.exists(filepath):
                     response = self.session.get(link)
                     if response.status_code != 200:
                         raise Exception("Could not download image")
                     # save response to file
                     if not os.path.isdir(output_dir):
                         os.makedirs(output_dir)
-                    with open(os.path.join(output_dir, f"{task_id}.mp4"), "wb") as output_file:
+                    with open(filepath, "wb") as output_file:
                         output_file.write(response.content)
 
-                return f"{output_dir}/{task_id}.mp4", status
+                return filepath, status
 
     def create_task(
         self,
